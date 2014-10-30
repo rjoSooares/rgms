@@ -6,6 +6,7 @@ Feature: orientations
 
   Scenario: new orientation
     Given the system has no orientations entitled "The Book is on the table"
+    And with file name "TB.pdf"
     When I create a new orientation entitled "The Book is on the table"
     Then the orientation "The Book is on the table" is properly stored by the system
 
@@ -13,6 +14,7 @@ Feature: orientations
     Given   the system has an orientation entitled "The Book is on the table" supervised by someone
     When    I delete the orientation for "The Book is on the table"
     Then    the orientation for "The Book is on the table" is properly removed by the system
+    And     your associate file
 
   Scenario: create orientation web
     Given I am at the create orientation page
@@ -78,3 +80,30 @@ Feature: orientations
     Then I'm still on orientations page
     And the orientations are not stored by the system
   #end
+
+  Scenario:	list existing orientations in alphabetical order of title
+    Given the system has orientations entitled "The Book is on the table"
+    And the system has orientations entitled "Hexa2"
+    When the system orders the orientations list by title
+    Then the system orientations list content is not modified
+
+  Scenario: list existing orientations in alphabetical order of title web
+    Given I am at the orientations page
+    And the system has some orientations created
+    When I select to view the list of orientations
+    And I select to order the list of orientations by "title"
+    Then my orientation list shows the orientations ordered by "title"
+
+  Scenario:	list existing orientations ordered by file name
+    Given the system has orientations entitled "The Book is on the table" with file name "TB.pdf"
+    And the system has orientations entitled "Hexa2" with file name "H2.pdf"
+    When the system orders the orientations list by file name
+    Then the system article list content is not modified
+
+  Scenario: list existing orientations in alphabetical order of file name web
+    Given I am at the orientations page
+    And the system has some orientations created
+    When I select to view the list of orientations
+    And I select to order the list of orientations by "file"
+    Then my orientation list shows the orientations ordered by "file"
+
